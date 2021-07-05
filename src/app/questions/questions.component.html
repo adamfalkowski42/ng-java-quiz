@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="!questionForm.valid"
+          >Save
+          </button>
+          <button type="button" class="btn btn-danger"
+                  (click)="onCancelClick()">Cancel
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="question">Question</label>
+            <input type="text" id="question" formControlName="question" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="question">Answer</label>
+            <textarea type="text" id="answer" formControlName="answer" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+    <hr>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <app-question-item *ngFor="let questionElement of questions; let i = index" [question]="questionElement"></app-question-item>
+      </div>
+    </div>
+  </div>
+</div>
