@@ -18,7 +18,7 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="question">Question</label>
-            <input type="text" id="question" formControlName="question" class="form-control">
+            <input type="text" id="question" formControlName="question" class="form-control"  [disabled]="!isEditMode">
           </div>
         </div>
       </div>
@@ -33,9 +33,16 @@
     </form>
     <hr>
 
-    <div class="row">
-      <div class="col-xs-12">
-        <app-question-item *ngFor="let questionElement of questions; let i = index" [question]="questionElement"></app-question-item>
+    <div class="list-group-item clearfix">
+      <div class="pull-left">
+        <div *ngFor="let questionElement of questions; let i = index">
+          <div class="list-group-item-heading">Question: {{questionElement.question}}</div>
+          <div class="list-group-item-text">Answer: {{questionElement.answer}}</div>
+          <button type="button" (click)="onEdit(questionElement)" class="btn btn-warning">Update</button>
+          <button type="button" (click)="onDelete(questionElement)" class="btn btn-danger">Remove</button>
+
+        </div>
+<!--        <app-question-item *ngFor="let questionElement of questions; let i = index" [question]="questionElement"></app-question-item>-->
       </div>
     </div>
   </div>

@@ -13,8 +13,9 @@ import {DataStorageService} from "../shared/data-storage-service";
 export class QuestionsComponent implements OnInit {
   questionForm: FormGroup;
   questions: Question[] = [];
-  questionElement: any;
   subscription: Subscription;
+  public isEditMode: boolean;
+
 
   constructor(private questionService: QuestionService, private dataStorage: DataStorageService) {
   }
@@ -27,11 +28,6 @@ export class QuestionsComponent implements OnInit {
         this.questions = questions;
       }
     )
-
-
-
-
-
   }
 
   private initForm() {
@@ -44,11 +40,29 @@ export class QuestionsComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.isEditMode){
+      this.questionService.updateQuestion(this.questionForm.value);
+      this.dataStorage.updateNewQuestion(this.questionForm.value);
+      this.questionForm.reset();
+    }else{
+      this.questionService.addQuestion(this.questionForm.value);
+      this.dataStorage.addNewQuestion(this.questionForm.value);
+      this.questionForm.reset();
+    }
 
   }
 
   onCancelClick() {
 
+  }
+
+  onDelete(questionElement: Question) {
+
+  }
+
+  onEdit(questionElement: Question) {
+    this.isEditMode =true;
+    this.questionForm.patchValue({'question':   questionElement.question,'answer':questionElement.answer})
   }
 }
 
