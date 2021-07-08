@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit, ViewChild} from "@angular/core";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {QuestionService} from "../services/question.service";
 import {Question} from "../model/question.model";
 import {Subscription} from "rxjs";
@@ -11,43 +11,38 @@ import {DataStorageService} from "../shared/data-storage-service";
   styleUrls: ['./questions.component.css']
 })
 export class QuestionsComponent implements OnInit {
-  questionForm: FormGroup;
-  questions: Question[] = [];
+  @ViewChild('questionForm') questionForm: NgForm;
+  question: Question = new Question(0,'','',false,'');
+  questions: Array<Question>;
   subscription: Subscription;
-  public isEditMode: boolean;
+  public isEditMode: boolean=false;
 
 
   constructor(private questionService: QuestionService, private dataStorage: DataStorageService) {
   }
 
   ngOnInit(): void {
-    this.initForm();
-    this.dataStorage.getQuestions().subscribe();
-    this.subscription = this.questionService.questionsChanged.subscribe(
-      (questions: Question[]) => {
-        this.questions = questions;
+
+    this.dataStorage.getQuestions().subscribe(
+      response =>{
+        this.questions=response;
       }
-    )
+    );
+    // this.subscription = this.questionService.questionsChanged.subscribe(
+    //   (questions: Question[]) => {
+    //     this.questions = questions;
+    //   }
+    // )
   }
 
-  private initForm() {
-    let question = '';
-    let answer = '';
-    this.questionForm = new FormGroup({
-      'question': new FormControl(question, Validators.required),
-      'answer': new FormControl(answer, Validators.required)
-    })
-  }
 
-  onSubmit() {
+  onSubmit(questionForm: NgForm) {
     if(this.isEditMode){
-      this.questionService.updateQuestion(this.questionForm.value);
-      this.dataStorage.updateNewQuestion(this.questionForm.value);
-      this.questionForm.reset();
+      console.log(questionForm.value);
+        this.questionService.updateQuestion(questionForm.value);
+        questionForm.reset();
     }else{
-      this.questionService.addQuestion(this.questionForm.value);
-      this.dataStorage.addNewQuestion(this.questionForm.value);
-      this.questionForm.reset();
+      this.questionService.addQuestion(questionForm.value);
     }
 
   }
@@ -56,16 +51,15 @@ export class QuestionsComponent implements OnInit {
 
   }
 
+  onEdit(questionElement: Question) {
+
+    this.isEditMode=true;
+    this.questionForm.form.patchValue({
+      'id':questionElement.id,'question': questionElement.question, 'answer':questionElement.answer
+    })
+  }
+
   onDelete(questionElement: Question) {
 
   }
-
-  onEdit(questionElement: Question) {
-    this.isEditMode =true;
-    this.questionForm.patchValue({'question':   questionElement.question,'answer':questionElement.answer})
-  }
 }
-
-
-
-

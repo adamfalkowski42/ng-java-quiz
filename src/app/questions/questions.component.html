@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
-    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+<!--    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">-->
+      <form #questionForm="ngForm" (ngSubmit)="onSubmit(questionForm)">
       <div class="row">
         <div class="col-xs-12">
           <button
@@ -14,11 +15,33 @@
           </button>
         </div>
       </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="id" *ngIf="isEditMode">Question#:  </label>
+              <input
+                type="text"
+                class="form-control"
+                id="id"
+                name="id"
+                [(ngModel)]="question.id"
+                [readOnly]="isEditMode"
+                *ngIf="false">
+            </div>
+          </div>
+        </div>
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
             <label for="question">Question</label>
-            <input type="text" id="question" formControlName="question" class="form-control"  [disabled]="!isEditMode">
+            <input
+              type="text"
+              class="form-control"
+              id="question"
+              name="question"
+              [readOnly]="isEditMode"
+              [(ngModel)]="question.question"
+              >
           </div>
         </div>
       </div>
@@ -26,7 +49,13 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="question">Answer</label>
-            <textarea type="text" id="answer" formControlName="answer" class="form-control"></textarea>
+            <textarea
+              type="text"
+              id="answer"
+              name="answer"
+              ngModel
+              #answer="ngModel"
+              class="form-control"></textarea>
           </div>
         </div>
       </div>
@@ -36,6 +65,7 @@
     <div class="list-group-item clearfix">
       <div class="pull-left">
         <div *ngFor="let questionElement of questions; let i = index">
+          <div class="list-group-item-heading">Question#: {{questionElement.id}}</div>
           <div class="list-group-item-heading">Question: {{questionElement.question}}</div>
           <div class="list-group-item-text">Answer: {{questionElement.answer}}</div>
           <button type="button" (click)="onEdit(questionElement)" class="btn btn-warning">Update</button>
