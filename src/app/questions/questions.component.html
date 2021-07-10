@@ -1,49 +1,25 @@
 <div class="row">
   <div class="col-xs-12">
-    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="col-xs-12">
-          <button
-            type="submit"
-            class="btn btn-success"
-            [disabled]="!questionForm.valid"
-          >Save
-          </button>
-          <button type="button" class="btn btn-danger"
-                  (click)="onCancelClick()">Cancel
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="question">Question</label>
-            <input type="text" id="question" formControlName="question" class="form-control"  [disabled]="!isEditMode">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="question">Answer</label>
-            <textarea type="text" id="answer" formControlName="answer" class="form-control"></textarea>
-          </div>
-        </div>
-      </div>
-    </form>
-    <hr>
-
-    <div class="list-group-item clearfix">
-      <div class="pull-left">
-        <div *ngFor="let questionElement of questions; let i = index">
-          <div class="list-group-item-heading">Question: {{questionElement.question}}</div>
-          <div class="list-group-item-text">Answer: {{questionElement.answer}}</div>
-          <button type="button" (click)="onEdit(questionElement)" class="btn btn-warning">Update</button>
-          <button type="button" (click)="onDelete(questionElement)" class="btn btn-danger">Remove</button>
-
-        </div>
-<!--        <app-question-item *ngFor="let questionElement of questions; let i = index" [question]="questionElement"></app-question-item>-->
-      </div>
+    <div *ngIf="isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <button
+      type="button"
+      class="btn btn-success"
+      [routerLink]="['/question']"
+    >Add
+    </button>
+  </div>
+</div>
+<hr>
+<div class="list-group-item clearfix">
+  <div class="pull-left">
+    <div *ngFor="let questionElement of questions">
+      <div class="list-group-item-heading">Question#: {{questionElement.id}}</div>
+      <div class="list-group-item-heading">Question: {{questionElement.question}}</div>
+      <div class="list-group-item-text">Answer: {{questionElement.answer}}</div>
+      <button type="button" [routerLink]="['/questions',questionElement.id]" class="btn btn-warning">Update
+      </button>
     </div>
   </div>
 </div>

@@ -1,33 +1,45 @@
 import {Question} from "../model/question.model";
 import {Injectable} from "@angular/core";
-import {Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
+import {DataStorageService} from "../shared/data-storage-service";
 
-@Injectable({providedIn:'root'})
-export class QuestionService{
-  private questions: Question[] = [];
-  questionsChanged = new Subject<Question[]>();
+@Injectable({providedIn: 'root'})
+export class QuestionService {
+  private questions: Array<Question> = new Array<Question>();
+  questionsChanged = new Subject<Array<Question>>();
+  private question: Question;
 
-  setQuestions(questions: Question[]){
+  constructor(private dataService: DataStorageService) {
+  }
+
+  setQuestions(questions: Array<Question>) {
     this.questions = questions;
     this.questionsChanged.next(this.questions.slice());
   }
 
-  getQuestions(){
-    return this.questions.slice();
+  getQuestions(): Observable<Array<Question>> {
+    return this.dataService.getQuestions();
   }
 
-  addQuestion(question: Question){
-    this.questions.push(question);
-    this.questionsChanged.next(this.questions.slice());
+  getQuestion(id: number): Observable<Question>{
+    return this.dataService.getQuestionById(id);
+  }
+
+  addQuestion(question: Question): Observable<Question>{
+    return this.dataService.addNewQuestion(question);
   }
 
   updateQuestion(questionUpdate: Question) {
 
-    this.questions.forEach(question =>{
-      if(question.id === questionUpdate.id){
-        question[question.id-1] = questionUpdate;
+    this.questions.forEach(question => {
+      if (question.id === questionUpdate.id) {
+        question[question.id - 1] = questionUpdate;
         this.questionsChanged.next(this.questions.slice());
       }
     })
+  }
+
+  deleteQuestion(id: number): Observable<any> {
+    return this.dataService.deleteQuestion(id);
   }
 }
