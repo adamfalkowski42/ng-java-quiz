@@ -8,13 +8,21 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HeaderComponent} from "./header/header.component";
 import {QuestionsComponent} from "./questions/questions.component";
 import {QuestionItemComponent} from "./questions/question-item/question-item.component";
+import {QuestionEditComponent} from "./questions/question-edit/question-edit.component";
+import {AlertComponent} from "./shared/alert/alert.component";
+import {QuestionAddComponent} from "./questions/question-add/question-add.component";
+import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     QuestionsComponent,
-    QuestionItemComponent
+    QuestionItemComponent,
+    QuestionEditComponent,
+    AlertComponent,
+    QuestionAddComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -22,8 +30,6 @@ import {QuestionItemComponent} from "./questions/question-item/question-item.com
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-
-
   ],
   providers: [],
   bootstrap: [AppComponent]
