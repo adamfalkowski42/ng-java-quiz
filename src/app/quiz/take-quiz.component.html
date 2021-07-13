@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-xs-12">
+<!--    <div *ngIf="isLoading" style="text-align: center;">-->
+<!--      <app-loading-spinner></app-loading-spinner>-->
+<!--    </div>-->
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="startQuiz()"
+      *ngIf="!chosenQuestion && !resetQuestions"
+    > Take quiz
+    </button>
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="nextQuestion()"
+      *ngIf="chosenQuestion"
+    > Next Question
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning"
+      (click)="resetQuiz()"
+      *ngIf="resetQuestions"
+    > Reset Answers
+    </button>
+  </div>
+</div>
+<hr>
+<div class="list-group" *ngIf="chosenQuestion">
+    <h4 class="list-group-item-heading">{{chosenQuestion.question}}</h4>
+    <p class="list-group-item-text" *ngIf="showAnswer">{{chosenQuestion.answer}}</p>
+  <hr>
+  <button type="button" class="btn btn-primary" (click)="btnShowAnswer(chosenQuestion)">Show answer </button>
+</div>

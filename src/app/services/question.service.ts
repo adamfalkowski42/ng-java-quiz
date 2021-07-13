@@ -30,16 +30,15 @@ export class QuestionService {
   }
 
   updateQuestion(questionUpdate: Question) {
-
-    this.questions.forEach(question => {
-      if (question.id === questionUpdate.id) {
-        question[question.id - 1] = questionUpdate;
-        this.questionsChanged.next(this.questions.slice());
-      }
-    })
+    questionUpdate.answered=true;
+    this.dataService.updateNewQuestion(questionUpdate);
   }
 
   deleteQuestion(id: number): Observable<any> {
     return this.dataService.deleteQuestion(id);
+  }
+
+  resetAnswered(questions: Array<Question>): Observable<any> {
+    return this.dataService.resetQuiz(questions);
   }
 }

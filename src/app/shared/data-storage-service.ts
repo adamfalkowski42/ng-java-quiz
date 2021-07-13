@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Question} from "../model/question.model";
+import {Observable} from "rxjs";
 
 
 @Injectable({providedIn: 'root'})
@@ -45,7 +46,7 @@ export class DataStorageService {
   // }
 
   updateNewQuestion(question: Question) {
-
+    console.log('This is the question being updated: ', question);
     return this.http.put<Question>('http://localhost:8080/api/v1/question',question).subscribe(
       response=>{
         console.log("Response on update: ",response);
@@ -58,6 +59,10 @@ export class DataStorageService {
 
   deleteQuestion(id: number) {
     return this.http.delete(`http://localhost:8080/api/v1/question/${id}`)
+  }
+
+  resetQuiz(questions: Array<Question>) {
+    return this.http.put<Question>('http://localhost:8080/api/v1/question/updateAll',questions);
   }
 }
 

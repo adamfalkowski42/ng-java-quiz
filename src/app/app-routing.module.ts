@@ -5,6 +5,8 @@ import {QuestionEditComponent} from "./questions/question-edit/question-edit.com
 import {QuestionAddComponent} from "./questions/question-add/question-add.component";
 import {QuestionsResolverService} from "./questions/questions-resolver";
 import {QuestionEditResolverService} from "./questions/question-edit/question-edit-resolver.component";
+import {TakeQuizComponent} from "./quiz/take-quiz.component";
+import {QuizResolverService} from "./quiz/quiz-resolver";
 
 const appRoutes: Routes =
   [
@@ -12,6 +14,7 @@ const appRoutes: Routes =
     {path: 'questions',component: QuestionsComponent, resolve: {question: QuestionsResolverService}},
     {path: 'questions/:id',component: QuestionEditComponent, resolve: {question: QuestionEditResolverService}},
     {path: 'question',component: QuestionAddComponent},
+    {path: 'quiz',component:TakeQuizComponent, resolve:{questions: QuizResolverService}}
 
   ]
 

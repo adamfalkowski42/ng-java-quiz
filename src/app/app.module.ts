@@ -12,6 +12,7 @@ import {QuestionEditComponent} from "./questions/question-edit/question-edit.com
 import {AlertComponent} from "./shared/alert/alert.component";
 import {QuestionAddComponent} from "./questions/question-add/question-add.component";
 import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
+import {TakeQuizComponent} from "./quiz/take-quiz.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.
     QuestionEditComponent,
     AlertComponent,
     QuestionAddComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    TakeQuizComponent
   ],
   imports: [
     BrowserModule,
