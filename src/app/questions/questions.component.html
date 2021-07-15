@@ -17,5 +17,7 @@
   <div class="list-group-item" *ngFor="let questionElement of questions">
     <h4 class="list-group-item-heading">{{questionElement.question}}</h4>
     <p class="list-group-item-text">{{questionElement.answer}}</p>
+    <button type="button" [routerLink]="['/questions',questionElement.id]" class="btn btn-warning">Update
+    </button>
   </div>
 </div>
